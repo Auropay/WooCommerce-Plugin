@@ -1,0 +1,718 @@
+/* Grid
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+}
+
+/* For devices larger than 400px */
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0;
+  }
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+  .container {
+    width: 80%;
+  }
+
+  .column,
+  .columns {
+    margin-left: 4%;
+  }
+
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0;
+  }
+
+  .one.column,
+  .one.columns {
+    width: 4.66666666667%;
+  }
+
+  .two.columns {
+    width: 13.3333333333%;
+  }
+
+  .three.columns {
+    width: 22%;
+  }
+
+  .four.columns {
+    width: 30.6666666667%;
+  }
+
+  .five.columns {
+    width: 39.3333333333%;
+  }
+
+  .six.columns {
+    width: 48%;
+  }
+
+  .seven.columns {
+    width: 56.6666666667%;
+  }
+
+  .eight.columns {
+    width: 65.3333333333%;
+  }
+
+  .nine.columns {
+    width: 74.0%;
+  }
+
+  .ten.columns {
+    width: 82.6666666667%;
+  }
+
+  .eleven.columns {
+    width: 91.3333333333%;
+  }
+
+  .twelve.columns {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .one-third.column {
+    width: 30.6666666667%;
+  }
+
+  .two-thirds.column {
+    width: 65.3333333333%;
+  }
+
+  .one-half.column {
+    width: 48%;
+  }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns {
+    margin-left: 8.66666666667%;
+  }
+
+  .offset-by-two.column,
+  .offset-by-two.columns {
+    margin-left: 17.3333333333%;
+  }
+
+  .offset-by-three.column,
+  .offset-by-three.columns {
+    margin-left: 26%;
+  }
+
+  .offset-by-four.column,
+  .offset-by-four.columns {
+    margin-left: 34.6666666667%;
+  }
+
+  .offset-by-five.column,
+  .offset-by-five.columns {
+    margin-left: 43.3333333333%;
+  }
+
+  .offset-by-six.column,
+  .offset-by-six.columns {
+    margin-left: 52%;
+  }
+
+  .offset-by-seven.column,
+  .offset-by-seven.columns {
+    margin-left: 60.6666666667%;
+  }
+
+  .offset-by-eight.column,
+  .offset-by-eight.columns {
+    margin-left: 69.3333333333%;
+  }
+
+  .offset-by-nine.column,
+  .offset-by-nine.columns {
+    margin-left: 78.0%;
+  }
+
+  .offset-by-ten.column,
+  .offset-by-ten.columns {
+    margin-left: 86.6666666667%;
+  }
+
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns {
+    margin-left: 95.3333333333%;
+  }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns {
+    margin-left: 34.6666666667%;
+  }
+
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns {
+    margin-left: 69.3333333333%;
+  }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns {
+    margin-left: 52%;
+  }
+
+}
+
+/* Clearing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Self Clearing Goodness */
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Payments Overview
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.clndr-row {
+  padding: 10px;
+  background: #fff;
+}
+
+.pymnt-hdr {
+  float: left;
+  width: 100%;
+  padding-top: 0;
+  background-color: white;
+}
+
+.leftbox-sales {
+  float: left;
+  width: 33.3333%;
+  height: 60px;
+  padding: 10px 0 10px 0;
+  -webkit-box-shadow: 0 0 0 1px #ccc;
+  -moz-box-shadow: 0 0 0 1px #ccc;
+  box-shadow: 0 0 0 1px #ccc;
+}
+
+.middlebox-refund {
+  float: left;
+  width: 33.3333%;
+  height: 60px;
+  padding: 10px 0 10px 0;
+  -webkit-box-shadow: 0 0 0 1px #ccc;
+  -moz-box-shadow: 0 0 0 1px #ccc;
+  box-shadow: 0 0 0 1px #ccc;
+}
+
+.rightbox-failed {
+  float: right;
+  width: 33.3333%;
+  height: 60px;
+  padding: 10px 0 10px 0;
+  -webkit-box-shadow: 0 0 0 1px #ccc;
+  -moz-box-shadow: 0 0 0 1px #ccc;
+  box-shadow: 0 0 0 1px #ccc;
+}
+
+.pymnt-ico {
+  float: left;
+  padding: 10px 0 10px 20px;
+  height: 38px;
+  width: auto;
+}
+
+.pymnt-ico-label {
+  float: left;
+  margin: 10px 0 0 20px;
+}
+
+.pymnt-label {
+  font-size: 16px;
+  margin-bottom: 1px;
+}
+
+.pymnt-amt {
+  font-size: 20px;
+  padding: 0px;
+}
+
+.clr-grn {
+  color: #009900;
+}
+
+.clr-orng {
+  color: #FF9900;
+}
+
+.clr-rd {
+  color: #D94235;
+}
+
+.pymnt-sumry {
+  width: 55%;
+  padding: 2px 2px 2px 2px;
+  float: left;
+  margin-top: 10px;
+}
+
+.pymnt-sumry-lbl {
+  padding: 6px 10px 10px 10px;
+  float: left;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sls-row {
+  background-color: #fff;
+  padding: 0.5%;
+  float: left;
+  margin-top: 10px;
+}
+
+.ico-crd {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 28px;
+  height: auto;
+  margin-right: 6px;
+}
+
+.card-label {
+  padding: 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.grph-cntrl {
+  background-color: #fff;
+  padding: 0.5%;
+  padding-top: 2px;
+  float: right;
+  margin-top: 5px;
+}
+
+.grph-btn {
+  float: right;
+  padding: 2px;
+}
+
+.pmt-btn {
+  display: inline-block;
+  height: 38px;
+  padding: 0 10px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: capitalize;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin-left: 5px;
+}
+
+.pmt-btn:hover {
+  color: #333;
+  border-color: #888;
+  outline: 0;
+}
+
+#loading {
+  border: 10px solid #fff;
+  border-top: 10px solid #2c85d0;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1s linear infinite;
+  background: transparent
+}
+
+#loading {
+  /* border-color: #fff; */
+  border-color: #ccc;
+  border-top-color: var(--main-bg-color);
+}
+
+.trans-dtl-tbl {
+  border: 1px solid #c3c4c7;
+  padding: 5px;
+  box-shadow: inset -1px -1px 0 #e0e0e0;
+  background-color: white;
+  margin-top: -25px;
+}
+
+.trans-dtl-tbl-head {
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.export-section {
+  float: right;
+  margin-right: 0%;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.export-input {
+  padding: 7px;
+  cursor: pointer;
+}
+
+.order-lst-tp {
+  margin-right: 0%;
+}
+
+.pt-bx-dtl {
+  background-color: #f0f0f1;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+#custom-box {
+  display: none;
+}
+
+#refunded-stat-details {
+  display: none;
+}
+
+#failed-stat-details {
+  display: none;
+}
+
+.pmt-btn-active {
+  background-color: gray;
+}
+
+.chart-view {
+  width: 99.5%;
+  margin-left: -10px;
+  margin-top: -11px;
+  margin-bottom: -10px;
+}
+
+.ico-nb {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 28px;
+  height: auto;
+  margin-right: 6px;
+}
+
+.ico-upi {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 28px;
+  height: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+span.bank-logo {
+  width: 50px;
+  height: 50px !important;
+  margin: 0 auto;
+  background-image: url("../assets/images/all-bank-logo-sprint.png");
+  padding: 0px;
+  display: inline-block;
+}
+
+.BK001 {
+  background-position-x: 0px;
+}
+
+.BK002 {
+  background-position-x: -50px;
+}
+
+.BK003 {
+  background-position-x: -100px;
+}
+
+.BK004 {
+  background-position-x: -150px;
+}
+
+.BK005 {
+  background-position-x: -200px;
+}
+
+.BK006 {
+  background-position-x: -250px;
+}
+
+.BK007 {
+  background-position-x: -300px;
+}
+
+.BK008 {
+  background-position-x: -350px;
+}
+
+.BK009 {
+  background-position-x: -400px;
+}
+
+.BK010 {
+  background-position-x: -450px;
+}
+
+.BK011 {
+  background-position-x: -500px;
+}
+
+.BK012 {
+  background-position-x: -550px;
+}
+
+.BK013 {
+  background-position-x: -600px;
+}
+
+.BK014 {
+  background-position-x: -650px;
+}
+
+.BK015 {
+  background-position-x: -700px;
+}
+
+.BK016 {
+  background-position-x: -750px;
+}
+
+.BK017 {
+  background-position-x: -800px;
+}
+
+.BK018 {
+  background-position-x: -850px;
+}
+
+.BK019 {
+  background-position-x: -900px;
+}
+
+.BK020 {
+  background-position-x: -950px;
+}
+
+.BK021 {
+  background-position-x: -1000px;
+}
+
+.BK022 {
+  background-position-x: -1050px;
+}
+
+.BK023 {
+  background-position-x: -1100px;
+}
+
+.BK024 {
+  background-position-x: -1150px;
+}
+
+.BK025 {
+  background-position-x: -1200px;
+}
+
+.BK026 {
+  background-position-x: -1250px;
+}
+
+.BK027 {
+  background-position-x: -1300px;
+}
+
+.BK028 {
+  background-position-x: -1350px;
+}
+
+.BK029 {
+  background-position-x: -1400px;
+}
+
+.BK030 {
+  background-position-x: -1450px;
+}
+
+.BK031 {
+  background-position-x: -1500px;
+}
+
+.BK032 {
+  background-position-x: -1550px;
+}
+
+.BK033 {
+  background-position-x: -1600px;
+}
+
+.BK034 {
+  background-position-x: -1650px;
+}
+
+.BK035 {
+  background-position-x: -1700px;
+}
+
+.BK036 {
+  background-position-x: -1750px;
+}
+
+.BK037 {
+  background-position-x: -1800px;
+}
+
+.BK038 {
+  background-position-x: -1850px;
+}
+
+.BK039 {
+  background-position-x: -1900px;
+}
+
+.BK040 {
+  background-position-x: -1950px;
+}
+
+.BK041 {
+  background-position-x: -2000px;
+}
+
+.BK042 {
+  background-position-x: -2050px;
+}
+
+.BK043 {
+  background-position-x: -2100px;
+}
+
+.BK044 {
+  background-position-x: -2150px;
+}
+
+.BK045 {
+  background-position-x: -2200px;
+}
+
+.BK046 {
+  background-position-x: -2250px;
+}
+
+.BK047 {
+  background-position-x: -2300px;
+}
+
+.BK048 {
+  background-position-x: -2350px;
+}
+
+.BK049 {
+  background-position-x: -2400px;
+}
+
+.BK050 {
+  background-position-x: -2450px;
+}
+
+.BK051 {
+  background-position-x: -2500px;
+}
+
+.BK052 {
+  background-position-x: -2550px;
+}
+
+.BK053 {
+  background-position-x: -2600px;
+}
+
+.BK054 {
+  background-position-x: -2650px;
+}
+
+.BK055 {
+  background-position-x: -2700px;
+}
+
+.BK056 {
+  background-position-x: -2750px;
+}
+
+.BK057 {
+  background-position-x: -2800px;
+}
+
+.BK058 {
+  background-position-x: -2850px;
+}
+
+.BK059 {
+  background-position-x: -2900px;
+}
+
+.BK060 {
+  background-position-x: -2950px;
+}
+
+.BK061 {
+  background-position-x: -3000px;
+}
+
+.BK062 {
+  background-position-x: -3050px;
+}
+
+.BK063 {
+  background-position-x: -3100px;
+}
+
+.BK064 {
+  background-position-x: -3150px;
+}
+
+.BK065 {
+  background-position-x: -3200px;
+}
+
+.BK066 {
+  background-position-x: -3250px;
+}
+
+.BK067 {
+  background-position-x: -3300px;
+}
+
+.BK068 {
+  background-position-x: -3350px;
+}
+
+.BK069 {
+  background-position-x: -3400px;
+}
