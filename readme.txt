@@ -57,7 +57,7 @@ Yes, it does - production and Test (sandbox) mode is driven by the API keys you 
 
 == Upgrade Notice ==
 = 1.2.0 =
-* switch from 1.1 to 1.2 Added the animation loader after place the order
+* switch from 1.1 to 1.2 Added the animation loader after place the order.
 
 == License ==
 
