@@ -8,6 +8,7 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: wordpress,woocommerce,auropay,payment,gateway,cashfree
 
+
 Allows you to use Auropay payment gateway with the WooCommerce plugin.
 Accept Credit/Debit card  payments using AuroPay directly on your WooCommerce shop, and issue refunds.
 
