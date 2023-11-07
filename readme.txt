@@ -2,7 +2,7 @@
 Contributors: woocommerce
 Requires at least: 5.6
 Tested up to: 5.6
-Stable tag: 1.2.0
+Stable tag: 1.2.8
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -51,13 +51,37 @@ Yes, it does - production and Test (sandbox) mode is driven by the API keys you 
 
 = 1.1.1 =
 * Added validation for checkout page
-
-= 1.1.0 =
 * Added validation for setting page
 
-== Upgrade Notice ==
 = 1.2.0 =
-* switch from 1.1 to 1.2 Added the animation loader after place the order.
+* Added the animation loader after place the order.
+
+= 1.2.1 =
+* Solved the payment form iframe text break issue
+
+= 1.2.2 =
+* Solved change the payment method issue for pay-order.
+
+= 1.2.3 =
+* Added the payment plan option for dokan users
+
+= 1.2.4 =
+* Added usd merchant multi currency
+
+= 1.2.5 =
+* Solved all the woocommerce errors
+
+
+= 1.2.6 =
+* Solved the iframe is not changed the payment link once we close the payment form
+
+= 1.2.7 =
+* Solved the close icon of form layout is not properly display for repay order
+
+== Upgrade Notice ==
+
+= 1.2.8 =
+* switch from 1.2.7 to 1.2.8 Added the single ajax call for order creation and payment form creation to improve the speed of checkout page
 
 == License ==
 

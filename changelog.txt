@@ -1,0 +1,37 @@
+*** Changelog ***
+
+= 2023-07-26 - version 1.2.8
+* Added the single ajax call for order creation and payment form creation to improve the speed of checkout page
+
+= 2023-07-18 - version 1.2.7
+* Solved the close icon of form layout is not properly display for repay order
+
+= 2023-07-15 - version 1.2.6
+* Solved the iframe is not changed the payment link once we close the payment form
+
+= 2023-06-14 - version 1.2.5
+* Solved all the woocommerce errors
+
+= 2023-05-25 - version 1.2.4
+* Added usd merchant multi currency
+
+= 2023-03-14 - version 1.2.3
+* Added the payment plan option for dokan users
+
+= 2022-12-11 - version 1.2.2
+* Solved change the payment method issue for pay-order
+
+= 2022-11-07 - version 1.2.1
+* Solved the payment form iframe text break issue
+
+= 2022-09-01 - version 1.2.0
+* Added the animation loader after place the order.
+
+= 2022-08-10 - version 1.1.1
+* Added validation for checkout page
+* Added validation for setting page
+
+= 2022-06-07 - version 1.0.0
+* First Release
+
+ 
