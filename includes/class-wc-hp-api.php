@@ -31,7 +31,6 @@ class WC_HP_API {
 		$api = 'api/payments/refno/' . $referenceNo;
 		$options = get_option( 'woocommerce_auropay_settings' );
 		$headers = array( 'x-version' => '1.0', 'x-access-key' => $accessKey, 'x-secret-key' => $secretKey, 'content-type' => 'application/json' );
-		$apiUrl = !empty( $options['api_url'] ) ? $options['api_url'] : $apiUrl;
 		$endpoint = $apiUrl . $api;
 
 		try {

@@ -6,7 +6,7 @@
  * Description: Custom payment gateway powered by AuroPay.
  * Author: Akshita Minocha
  * Author URI: https://auropay.net/
- * Version: 1.2.8
+ * Version: 1.2.9
  * Requires at least: 5.6
  * Tested up to: 5.6
  *
