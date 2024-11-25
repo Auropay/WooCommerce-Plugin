@@ -37,14 +37,14 @@ function submitedOrderData() {
 	$order_id = isset( $_POST['order_id'] ) ? intval( $_POST['order_id'] ) : 0;
 	// check if request come from place order or pay order
 	if ( isset( $_POST['order_action'] ) && 'pay_for_order' == $_POST['order_action'] ) {
-		
-		Custom_Functions::log( 'orderid:' . $order_id . '_repay_order_start ' . date( "H:i:s" ) );
+
+		Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_repay_order_start ' );
 		if ( isset( $_POST['auropay-repay-checkout-nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['auropay-repay-checkout-nonce'] ), 'auropay_repay_checkout_form_action' ) ) {
 			$wc = new WC_Auropay_Gateway();
 			$params = $wc->getPaymentLinkParams( $order_id, 1 );
-			Custom_Functions::log( 'orderid:' . $order_id . '_repay_payment_link_creation_start ' . date( "H:i:s" ) );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_repay_payment_link_creation_start ' );
 			$response = WC_HP_API::getPaymentLink( $params );
-			Custom_Functions::log( 'orderid:' . $order_id . '_repay_payment_link_creation_end ' . date( "H:i:s" ) );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_repay_payment_link_creation_end ' );
 			if ( isset( $response['error'] ) ) {
 				echo 'error';
 			} else {
@@ -61,15 +61,15 @@ function submitedOrderData() {
 			// Nonce verification failed, handle the error or display an error message.
 			die( esc_html( __( 'Nonce repay checkout auropay verification failed.', 'woocommerce-gateway-auropay' ) ) );
 		}
-		Custom_Functions::log( 'orderid:' . $order_id . '_repay_order_end ' . date( "H:i:s" ) );
+		Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_repay_order_end ' );
 		exit;
 	} else {
 
 		if ( 'step1' == $_POST['order_action'] ) {
-			Custom_Functions::log( 'orderid:' . $order_id . '_order_creation_start ' . date( "H:i:s" ) );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_order_creation_start ' );
 			if ( isset( $_POST['auropay-process-checkout-nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['auropay-process-checkout-nonce'] ), 'auropay_checkout_form_action' ) ) {
 				$sanitizedDataFields = filter_input( INPUT_POST, 'fields', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY );
-				if (null !== $sanitizedDataFields && is_array( $sanitizedDataFields )) {
+				if ( null !== $sanitizedDataFields && is_array( $sanitizedDataFields ) ) {
 					$order = new WC_Order();
 					$cart = WC()->cart;
 					$checkout = WC()->checkout;
@@ -82,7 +82,7 @@ function submitedOrderData() {
 						$data[$values['name']] = sanitize_text_field( $values['value'] );
 					}
 
-					$cart_hash = md5( json_encode( wc_clean( $cart->get_cart_for_session() ) ) . $cart->total );
+					$cart_hash = hash( "sha512", json_encode( wc_clean( $cart->get_cart_for_session() ) ) . $cart->total );
 					$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
 
 					if ( empty( $data['billing_first_name'] ) ) {
@@ -98,7 +98,7 @@ function submitedOrderData() {
 							$order->{"set_{$key}"}( $value );
 
 							// Store custom fields prefixed with wither shipping_ or billing_
-						} elseif (  ( 0 === stripos( $key, 'billing_' ) || 0 === stripos( $key, 'shipping_' ) )
+						} elseif ( ( 0 === stripos( $key, 'billing_' ) || 0 === stripos( $key, 'shipping_' ) )
 							&& !in_array( $key, array( 'shipping_method', 'shipping_total', 'shipping_tax' ) )
 						) {
 							$order->update_meta_data( '_' . $key, $value );
@@ -129,13 +129,13 @@ function submitedOrderData() {
 					do_action( 'woocommerce_checkout_create_order', $order, $data );
 					// Save the order.
 					$order_id = $order->save();
-					Custom_Functions::log( 'orderid:' . $order_id . '_order_creation_end ' . date( "H:i:s" ) );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_order_creation_end ' );
 					do_action( 'woocommerce_checkout_update_order_meta', $order_id, $data );
 					$wc = new WC_Auropay_Gateway();
 					$params = $wc->getPaymentLinkParams( $order_id );
-					Custom_Functions::log( 'orderid:' . $order_id . '_payment_link_api_creation_start ' . date( "H:i:s" ) );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_payment_link_api_creation_start ' );
 					$response = WC_HP_API::getPaymentLink( $params );
-					Custom_Functions::log( 'orderid:' . $order_id . '_payment_link_api_creation_end ' . date( "H:i:s" ) );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_payment_link_api_creation_end ' );
 
 					if ( isset( $response['error'] ) ) {
 						$order->update_status( 'failed' );
@@ -155,7 +155,7 @@ function submitedOrderData() {
 				// Nonce verification failed, handle the error or display an error message.
 				die( esc_html( __( 'Nonce checkout auropay verification failed.', 'woocommerce-gateway-auropay' ) ) );
 			}
-			Custom_Functions::log( 'orderid:' . $order_id . '_payment_link_creation_end ' . date( "H:i:s" ) );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_payment_link_creation_end ' );
 		}
 	}
 	die();
@@ -175,7 +175,6 @@ function showCustomButton( $button ) {
 	if ( WC_HP_PLUGIN_NAME == $chosen_payment_method ) {
 
 		$order_button_text = __( 'Place order and Continue', 'woocommerce' );
-		$js_event = '';
 		wp_nonce_field( 'auropay_checkout_form_action', 'auropay-process-checkout-nonce' );
 		$button = '<input type="button"
         onClick="process_order()"
@@ -211,7 +210,7 @@ function showCustomButton( $button ) {
 jQuery('#hp_iframe').hide();
 </script>
 <?php
-	}
+}
 	?>
 <script type="text/javascript">
 (function($) {
@@ -245,14 +244,12 @@ return $button;
 function showCustomPayButton( $buttonText ) {
 	global $order_pay_id;
 	wp_nonce_field( 'auropay_repay_checkout_form_action', 'auropay-repay-checkout-nonce' );
-	//echo $paymentMethod;
 	$gateways = WC()->payment_gateways->payment_gateways();
 	$options = array();
 	foreach ( $gateways as $id => $gateway ) {
 		$options[] = $id;
 	}
 
-	$js_event = '';
 	if ( 'auropay' == $options[0] ) {
 		$order_button_text = __( 'Pay For Auropay Order', 'woocommerce' );
 		$buttonText = '<input type="button" onClick="pay_order(' . $order_pay_id .
@@ -283,7 +280,7 @@ var order_pay_id = <?php echo esc_js( $order_pay_id ); ?>;
 </script>
 
 <?php
-return $buttonText; 
+return $buttonText;
 }
 
 /**
@@ -408,7 +405,8 @@ function process_order() {
 				});
 			} else if ($this.val().trim() == '') {
 				jQuery.each($this, function(key, value) {
-					if (value.id == 'billing_first_name' || value.id == 'billing_last_name' || value.id == 'billing_state' || value
+					if (value.id == 'billing_first_name' || value.id == 'billing_last_name' || value
+						.id == 'billing_state' || value
 						.id == 'billing_postcode' || value.id == 'billing_phone' || value.id ==
 						'billing_email' || value.id == 'billing_address_1' || value.id == 'billing_city'
 					) {
@@ -435,7 +433,7 @@ function process_order() {
 								'woocommerce-invalid woocommerce-invalid-required-field');
 							validated = false;
 							any_invalid = true;
-						}else if (value.value.length != 6) {
+						} else if (value.value.length != 6) {
 							$div_data += '<li data-id="' + value.id + '"><strong>Billing ' + jQuery(
 									"label[for='" + value.id + "']").text() +
 								'</strong> is not valid.</li>';
@@ -454,7 +452,7 @@ function process_order() {
 								'woocommerce-invalid woocommerce-invalid-required-field');
 							validated = false;
 							any_invalid = true;
-						}else if (value.value.length != 10) {
+						} else if (value.value.length != 10) {
 							$div_data += '<li data-id="' + value.id + '"><strong>Billing ' + jQuery(
 									"label[for='" + value.id + "']").text() +
 								'</strong> is not valid. Enter 10 digit number</li>';

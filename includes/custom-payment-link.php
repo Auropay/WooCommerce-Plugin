@@ -83,6 +83,8 @@ function calculateCurrentRange( $current_range ) {
 			$start_date = strtotime( '-6 days', strtotime( 'midnight', current_time( 'timestamp' ) ) );
 			$end_date = strtotime( 'midnight', current_time( 'timestamp' ) );
 			break;
+		default:
+			break;
 	}
 	$end_date = gmdate( 'Y-m-d', $end_date ) . ' 23:59:59';
 	return gmdate( 'Y-m-d', $start_date ) . '###' . $end_date;

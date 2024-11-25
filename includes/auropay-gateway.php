@@ -40,7 +40,7 @@ add_filter( 'http_request_timeout', 'wp9838cTimeoutExtend' );
  *
  * @return int
  */
-function wp9838cTimeoutExtend( $time ) {
+function wp9838cTimeoutExtend() {
 	// Default timeout is 5
 	return 30;
 }
@@ -224,19 +224,17 @@ function auropayInitGatewayClass() {
 			} else {
 				//get payment link expiry time
 				$curr_date = gmdate( 'Y-m-d H:i:s' );
-				$expire_date = strtotime( $curr_date . ' + ' . $this->expiry . ' minute' );
-				$expireOn1 = gmdate( 'd-m-Y H:i:s', $expire_date );
-				$expire_date1 = strtotime( $expireOn1 . ' + 30 minute' );
-				$expireOn2 = gmdate( 'd-m-Y H:i:s', $expire_date1 );
-				$expire_date2 = strtotime( $expireOn2 . ' + 5 hour' );
+				$expire_date = strtotime( $curr_date . ' + ' . $this->expiry . ' minutes' );
+				$expire_date1 = $expire_date + ( 30 * 60 ); // Adding 30 minutes
+				$expire_date2 = $expire_date1 + ( 5 * 3600 ); // Adding 5 hours
 				$expireOn = gmdate( 'd-m-Y H:i:s', $expire_date2 );
 
 				$amount = number_format( $order->get_total(), 2, '.', '' );
 				$enablePartialPayment = false;
 				$enableMultiplePayment = false;
 			}
-			$secureToken = substr( str_shuffle( MD5( microtime() ) ), 0, 100 );
-			$accessKey = substr( str_shuffle( MD5( microtime() ) ), 0, 100 );
+			$secureToken = hash( "sha512", microtime() );
+			$accessKey = hash( "sha512", microtime() );
 			update_post_meta( $order_id, '_hp_securetoken', $secureToken );
 			update_post_meta( $order_id, '_hp_accesskey', $accessKey );
 
@@ -359,20 +357,21 @@ function auropayInitGatewayClass() {
 			//Get the current order status
 			$status = WC_HP_API::getPaymentStatus( $auropayTransactionId, $order_id );
 			$paymentStatusError = isset( $_REQUEST['error'] ) ? sanitize_text_field( $_REQUEST['error'] ) : '';
-			if ( 'Success' == $status ) {
+			if ( 2 == $status ) {
 				$order->payment_complete();
 				$order->add_order_note( sprintf( __( 'Payment was successfully processed by Auropay Payments.', 'woocommerce-gateway-auropay' ) ) );
 			} else {
 				if ( 'Fail' != $status ) {
 					$statusArr = orderStatusMapping();
-					Custom_Functions::log( 'orderid:' . $order_id . '_order_status_number ' . $status );
-					Custom_Functions::log( 'orderid:' . $order_id . '_order_status ' . $statusArr[$status] );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_order_status_number ' . $status );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_order_status ' . $statusArr[$status] );
 					$order->update_status( $statusArr[$status] );
 					$order->add_order_note( sprintf(
 						/* translators: Error message displayed when payment status is not 'expiry'. */
 						__( 'Error message status number:%s', 'woocommerce-gateway-auropay' ), $statusArr[$status] ) );
 				} else {
-					Custom_Functions::log( 'orderid:' . $order_id . '_order_not_found ' . $status );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_order_not_found ' . $status );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_error' . $paymentStatusError );
 					$order->update_status( 'failed' );
 					update_post_meta( $order_id, '_hp_transaction_status', 5 );
 					$order->add_order_note( sprintf(

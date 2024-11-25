@@ -208,7 +208,6 @@ class Custom_Functions {
 			'ZMW' => 'ZK',
 		);
 		$currency_symbol = isset( $symbols[$currency] ) ? $symbols[$currency] : '';
-		//return $currency_symbol;
 		return '&#8377';
 	}
 }

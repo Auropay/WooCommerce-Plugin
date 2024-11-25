@@ -77,11 +77,7 @@ function authenticateRequest( $params ) {
 	$token = explode( 'Bearer', $bearer_token );
 	$token = trim( $token[1] );
 
-	if ( $token == $access_key ) {
-		return true;
-	} else {
-		return false;
-	}
+	return $token == $access_key;
 }
 
 /**
@@ -94,11 +90,7 @@ function paymentTokenAuthenticateRequest() {
 	$token = $headers['accesskey'];
 	$token_check = WC_HP_ACCESS_KEY;
 
-	if ( $token == $token_check ) {
-		return true;
-	} else {
-		return false;
-	}
+	return $token == $token_check;
 }
 
 /**

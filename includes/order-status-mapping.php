@@ -17,7 +17,7 @@ if ( !defined( 'ABSPATH' ) ) {
  */
 function orderStatusMapping() {
 	//Woocommerce Status
-	$statusArr = [
+	return [
 		0 => 'on-hold',
 		1 => 'on-hold',
 		2 => 'processing',
@@ -31,8 +31,6 @@ function orderStatusMapping() {
 		23 => 'failed',
 		25 => 'on-hold',
 	];
-
-	return $statusArr;
 }
 
 /**
@@ -42,7 +40,7 @@ function orderStatusMapping() {
  */
 function auropayStatusMapping() {
 	//Auropay Status
-	$auropayStatusArr = [
+	return [
 		0 => 'In Process',
 		1 => 'In Process',
 		2 => 'Authorized',
@@ -60,6 +58,4 @@ function auropayStatusMapping() {
 		24 => 'SettlementFailed',
 		25 => 'Approved',
 	];
-
-	return $auropayStatusArr;
 }

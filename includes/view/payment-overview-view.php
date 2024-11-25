@@ -125,15 +125,15 @@ $auropayStatusArr = auropayStatusMapping();
 
 										if ('wc-failed' == $payment->status) {
 											$paymentStatus = 'Failed';
-										} else if ('wc-processing' == $payment->status) {
+										} elseif ('wc-processing' == $payment->status) {
 											$paymentStatus = 'Processing';
-										} else if ('wc-refunded' == $payment->status) {
+										} elseif ('wc-refunded' == $payment->status) {
 											$paymentStatus = 'Refunded';
-										} else if ( 'wc-cancelled' == $payment->status ) {
+										} elseif ( 'wc-cancelled' == $payment->status ) {
 											$paymentStatus = 'Cancelled';
-										} else if ( 'wc-pending' == $payment->status ) {
+										} elseif ( 'wc-pending' == $payment->status ) {
 											$paymentStatus = 'Pending';
-										} else if ( 'wc-on-hold' == $payment->status ) {
+										} elseif ( 'wc-on-hold' == $payment->status ) {
 											$paymentStatus = 'On-hold';
 										} else{
 											$paymentStatus = 'Completed';
@@ -149,7 +149,6 @@ $auropayStatusArr = auropayStatusMapping();
 
 										if (count($auropayOrder->get_refunds()) > 0 && 'Failed' != $paymentStatus) {
 											$refund = $auropayOrder->get_total_refunded();
-											// $sale = $sale - $refund;
 											$refund = 0 - $refund;
 											$refund = number_format((float) $refund, 2, '.', '');
 										}

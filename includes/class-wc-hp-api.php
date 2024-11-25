@@ -29,7 +29,6 @@ class WC_HP_API {
 	 */
 	public static function validateApiKey( $referenceNo, $accessKey, $secretKey, $apiUrl ) {
 		$api = 'api/payments/refno/' . $referenceNo;
-		$options = get_option( 'woocommerce_auropay_settings' );
 		$headers = array( 'x-version' => '1.0', 'x-access-key' => $accessKey, 'x-secret-key' => $secretKey, 'content-type' => 'application/json' );
 		$endpoint = $apiUrl . $api;
 
@@ -65,13 +64,13 @@ class WC_HP_API {
 	 * @return array
 	 */
 	public static function apiKeyRequest( $api, $order_id, $method = 'POST', $params = array() ) {
-		Custom_Functions::log( 'orderid:' . $order_id . '_calling_api ' . $api );
+		Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_calling_api ' . $api );
 
 		$options = get_option( 'woocommerce_auropay_settings' );
 		$productType = get_post_meta( $order_id, '_ap_product_type', true );
 		$orderCurrency = get_post_meta( $order_id, '_ap_order_currency', true );
-		Custom_Functions::log( 'orderid:' . $order_id . '_product_type ' . $productType );
-		Custom_Functions::log( 'orderid:' . $order_id . '_order_currency ' . $orderCurrency );
+		Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_product_type ' . $productType );
+		Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_order_currency ' . $orderCurrency );
 		if ( 'Subscription' == $productType ) {
 			$accessKey = $options['sub_plan_access_key'];
 			$secretKey = $options['sub_plan_secret_key'];
@@ -111,14 +110,14 @@ class WC_HP_API {
 			}
 
 			if ( 200 != $response['response']['code'] && 201 != $response['response']['code'] && 204 != $response['response']['code'] ) {
-				Custom_Functions::log( 'orderid:' . $order_id . '_api_params ' . json_encode( $params ) );
-				Custom_Functions::log( 'orderid:' . $order_id . '_api_error ' . $response['body'] );
+				Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_api_params ' . json_encode( $params ) );
+				Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_api_error ' . $response['body'] );
 			}
 
-			Custom_Functions::log( 'orderid:' . $order_id . '_called_api ' . $api );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_called_api ' . $api );
 			return $response;
 		} catch ( Exception $e ) {
-			Custom_Functions::log( 'orderid:' . $order_id . '_called_api ' . $api . '_response_error ' );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order_id . '_called_api ' . $api . '_response_error ' );
 			return array( 'error' => true );
 		}
 	}
@@ -159,6 +158,7 @@ class WC_HP_API {
 	 * @return string
 	 */
 	public static function getPaymentStatus( $transaction_id, $order_id ) {
+		define( 'WC_HP_TRANSACTION_CARD_TYPE', '_hp_transaction_card_type' );
 		update_post_meta( $order_id, '_hp_transaction_id', $transaction_id );
 
 		//Make the second API call to get transaction status
@@ -171,7 +171,7 @@ class WC_HP_API {
 
 				$response = json_decode( $response['body'], true );
 
-				update_post_meta( $order_id, '_hp_transaction_card_type', $response['tenderInfo']['cardType'] );
+				update_post_meta( $order_id, WC_HP_TRANSACTION_CARD_TYPE, $response['tenderInfo']['cardType'] );
 				if ( isset( $response['transactionResult']['processorAuthCode'] ) ) {
 					update_post_meta( $order_id, '_hp_transaction_auth_code', $response['transactionResult']['processorAuthCode'] );
 				}
@@ -180,24 +180,20 @@ class WC_HP_API {
 
 				//set bankname for net banking
 				if ( 7 == $response['channelType'] ) {
-					update_post_meta( $order_id, '_hp_transaction_card_type', $response['tenderInfo']['bankName'] );
+					update_post_meta( $order_id, WC_HP_TRANSACTION_CARD_TYPE, $response['tenderInfo']['bankName'] );
 				}
 
 				//set upiid for UPI
 				if ( 6 == $response['channelType'] ) {
-					update_post_meta( $order_id, '_hp_transaction_card_type', $response['tenderInfo']['upiId'] );
+					update_post_meta( $order_id, WC_HP_TRANSACTION_CARD_TYPE, $response['tenderInfo']['upiId'] );
 				}
 
 				//set upiid for wallet
 				if ( 8 == $response['channelType'] ) {
-					update_post_meta( $order_id, '_hp_transaction_card_type', $response['tenderInfo']['walletProvider'] );
+					update_post_meta( $order_id, WC_HP_TRANSACTION_CARD_TYPE, $response['tenderInfo']['walletProvider'] );
 				}
 
-				if ( 2 == $response['transactionStatus'] ) {
-					return 'Success';
-				} else {
-					return $response['transactionStatus'];
-				}
+				return $response['transactionStatus'];
 			} else {
 				return 'Fail';
 			}
@@ -216,14 +212,7 @@ class WC_HP_API {
 	 */
 	public static function processRefund( $params, $order_id ) {
 		$transaction_id = get_post_meta( $order_id, '_hp_transaction_id', true );
-
-		//check void amount - because partial refund is not supporting
-		$order = wc_get_order( $order_id );
-		$order_total_amount = number_format( $order->get_total(), 2, '.', '' );
-		$void_amount = number_format( $params['Amount'], 2, '.', '' );
-
 		$params['OrderId'] = $transaction_id;
-
 		$api = 'api/refunds';
 
 		try {
@@ -232,18 +221,13 @@ class WC_HP_API {
 				$response = json_decode( $response['body'], true );
 				if ( 2 == $response['transactionStatus'] || 18 == $response['transactionStatus'] ) {
 					return true;
-				} else {
-					return false;
 				}
-			} else {
-				return false;
 			}
+			return false;
 		} catch ( Exception $e ) {
 			wc_add_notice( 'There is a problem with your transaction. Please try later.', 'error' );
 			return false;
 		}
-
-		return false;
 	}
 
 	/**

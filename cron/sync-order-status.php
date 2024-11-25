@@ -49,24 +49,23 @@ function syncOrderStatus() {
 		$created_date = $order->get_date_created();
 		$created_date_formatted = $created_date->format( 'Y-m-d H:i:s' );
 		$time = ( strtotime( $created_date_formatted ) ) + ( 60 * 10 );
-		Custom_Functions::log( 'orderid:' . $order->get_id() . '_cron_order_created_time ' . $created_date_formatted );
-		Custom_Functions::log( 'orderid:' . $order->get_id() . '_cron_after_10_minutes_of_order_creation ' . gmdate( 'Y-m-d H:i:s', $time ) );
+		Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order->get_id() . '_cron_order_created_time ' . $created_date_formatted );
 		if ( time() > $time ) {
-			Custom_Functions::log( 'orderid:' . $order->get_id() . '_cron_run_timing ' . gmdate( 'Y-m-d H:i:s', time() ) );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order->get_id() . '_cron_run_timing ' . gmdate( 'Y-m-d H:i:s', time() ) );
 			$order_id = $order->get_id();
 			$refNo = get_post_meta( $order_id, '_ap_transaction_reference_number', true );
-			Custom_Functions::log( 'orderid:' . $order->get_id() . '_cron_order_refference_number ' . $refNo );
+			Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order->get_id() . '_cron_order_refference_number ' . $refNo );
 			$paymentData = WC_HP_API::getPaymentOrderStatusByReference( $refNo, $order_id );
 			if ( -1 != $paymentData ) {
 				update_post_meta( $order_id, '_hp_transaction_id', $paymentData['transactionId'] );
 				update_post_meta( $order_id, '_hp_transaction_status', $paymentData['transactionStatus'] );
 				if ( $statusArr[$paymentData['transactionStatus']] ) {
-					Custom_Functions::log( 'orderid:' . $order->get_id() . '_cron_order_status ' . $statusArr[$paymentData['transactionStatus']] );
+					Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order->get_id() . '_cron_order_status ' . $statusArr[$paymentData['transactionStatus']] );
 					$order->update_status( $statusArr[$paymentData['transactionStatus']] );
 				}
 			} else {
 				$order->update_status( 'cancelled' );
-				Custom_Functions::log( 'orderid:' . $order->get_id() . '_cron_order_not_found ' );
+				Custom_Functions::log( WC_HP_ORDER_ID . ':' . $order->get_id() . '_cron_order_not_found ' );
 			}
 		}
 	}

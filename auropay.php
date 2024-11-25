@@ -41,6 +41,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	define( 'WC_HP_ACCESS_KEY', 'cGF5bWVudCBnYXRld2F5MDA5=dfsdfsdfdsfsdf432423423434+sfjejd9' );
 	define( 'WC_HP_PLUGIN_NAME', 'auropay' );
 	define( 'WC_HP_TIMEZONE', 'Asia/Kolkata' );
-	define( 'WC_HP_PLUGIN_VERSION', '1.2.8' );
+	define( 'WC_HP_PLUGIN_VERSION', '1.2.9' );
+	define( 'WC_HP_ORDER_ID', 'orderid' );
+	define( 'WC_HP_PAYMENT_ID', 'Payment Id' );
+	define( 'WC_HP_PAYMENT_DETAIL', 'Payment Detail' );
+	define( 'WC_HP_AUROPAY_STATUS', 'Auropay Status' );
 	include_once plugin_dir_path( __FILE__ ) . 'includes/auropay-gateway.php';
 }
