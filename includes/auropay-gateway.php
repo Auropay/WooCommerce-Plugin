@@ -233,10 +233,6 @@ function auropayInitGatewayClass() {
 				$enablePartialPayment = false;
 				$enableMultiplePayment = false;
 			}
-			$secureToken = hash( "sha512", microtime() );
-			$accessKey = hash( "sha512", microtime() );
-			update_post_meta( $order_id, '_hp_securetoken', $secureToken );
-			update_post_meta( $order_id, '_hp_accesskey', $accessKey );
 
 			$user_id = get_post_meta( $order_id, '_customer_user', true );
 
@@ -302,7 +298,6 @@ function auropayInitGatewayClass() {
 				'title' => $title,
 				'shortDescription' => '',
 				'paymentDescription' => '',
-				'invoiceNumber' => $order_id,
 				'enablePartialPayment' => $enablePartialPayment,
 				'enableMultiplePayment' => $enableMultiplePayment,
 				'enableProtection' => false,
@@ -315,10 +310,8 @@ function auropayInitGatewayClass() {
 				'source' => 'ecommerce',
 				'platform' => 'woocommerce',
 				'callbackParameters' => array(
-					'CallbackSuccessUrl' => $this->getReturnUrl() . '&ORDERID=' . $secureToken . '&transactionId={transactionId}&type=1',
-					'CallbackFailureUrl' => $this->getReturnUrl() . '&ORDERID=' . $secureToken . '&type=2',
-					'AccessKey' => $accessKey,
-					'SecretKey' => $secureToken,
+					'CallbackSuccessUrl' => $this->getReturnUrl() . '&ORDERID=' . $order_id . '&transactionId={transactionId}&type=1',
+					'CallbackFailureUrl' => $this->getReturnUrl() . '&ORDERID=' . $order_id . '&type=2',
 					'ReferenceNo' => $refNo,
 					'ReferenceType' => 'WoocommerceOrder',
 					'TransactionId' => '',

@@ -6,9 +6,9 @@
  * Description: Custom payment gateway powered by AuroPay.
  * Author: Akshita Minocha
  * Author URI: https://auropay.net/
- * Version: 1.2.9
+ * Version: 1.3.1
  * Requires at least: 5.6
- * Tested up to: 5.6
+ * Tested up to: 5.6 < 6.7
  *
  * @package AuroPay_Gateway_For_WooCommerce
  * @link    https://auropay.net/
@@ -41,7 +41,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	define( 'WC_HP_ACCESS_KEY', 'cGF5bWVudCBnYXRld2F5MDA5=dfsdfsdfdsfsdf432423423434+sfjejd9' );
 	define( 'WC_HP_PLUGIN_NAME', 'auropay' );
 	define( 'WC_HP_TIMEZONE', 'Asia/Kolkata' );
-	define( 'WC_HP_PLUGIN_VERSION', '1.2.9' );
+	define( 'WC_HP_PLUGIN_VERSION', '1.3.1' );
 	define( 'WC_HP_ORDER_ID', 'orderid' );
 	define( 'WC_HP_PAYMENT_ID', 'Payment Id' );
 	define( 'WC_HP_PAYMENT_DETAIL', 'Payment Detail' );

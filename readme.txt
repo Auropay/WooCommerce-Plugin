@@ -2,7 +2,7 @@
 Contributors: woocommerce
 Requires at least: 5.6
 Tested up to: 5.6
-Stable tag: 1.2.9
+Stable tag: 1.3.1
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -81,10 +81,19 @@ Yes, it does - production and Test (sandbox) mode is driven by the API keys you 
 = 1.2.8 =
 * switch from 1.2.7 to 1.2.8 Added the single ajax call for order creation and payment form creation to improve the speed of checkout page
 
-== Upgrade Notice ==
-
 = 1.2.9 =
 * switch from 1.2.8 to 1.2.9 Fixed issue of not considering latest posted api url when save settings
+
+= 1.3.0 =
+* switch from 1.2.9 to 1.3.0 Removed the accessKey and secretKey from payment link request
+
+= 1.3.1 =
+* switch from 1.3.0 to 1.3.1 Added the validation for firstname and lastname
+
+== Upgrade Notice ==
+
+= 1.3.1 =
+* switch from 1.3.0 to 1.3.1 Added the validation for firstname and lastname
 
 == License ==
 

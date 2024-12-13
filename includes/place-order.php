@@ -423,7 +423,30 @@ function process_order() {
 				var email_regex = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 				var phone_number_regex = /^[0-9-+]+$/;
 				var pincode_regex = /^[0-9]+$/;
+				var name_regex = /^[a-zA-Z\s]{1,70}$/;
 				jQuery.each($this, function(key, value) {
+					if (value.id == 'billing_first_name') {
+						if (name_regex.test(value.value) === false) {
+							$div_data += '<li data-id="' + value.id + '"><strong>Billing ' + jQuery(
+									"label[for='" + value.id + "']").text() +
+								'</strong> is not valid.</li>';
+							$parent.removeClass('woocommerce-validated').addClass(
+								'woocommerce-invalid woocommerce-invalid-required-field');
+							validated = false;
+							any_invalid = true;
+						}
+					}
+					if (value.id == 'billing_last_name') {
+						if (name_regex.test(value.value) === false) {
+							$div_data += '<li data-id="' + value.id + '"><strong>Billing ' + jQuery(
+									"label[for='" + value.id + "']").text() +
+								'</strong> is not valid.</li>';
+							$parent.removeClass('woocommerce-validated').addClass(
+								'woocommerce-invalid woocommerce-invalid-required-field');
+							validated = false;
+							any_invalid = true;
+						}
+					}
 					if (value.id == 'billing_postcode') {
 						if (pincode_regex.test(value.value) === false) {
 							$div_data += '<li data-id="' + value.id + '"><strong>Billing ' + jQuery(
