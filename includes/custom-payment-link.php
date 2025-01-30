@@ -10,6 +10,8 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'WC_HP_AUROPAY_CURRENT_CLASS', 'class="current" aria-current="page"' );
+
 /**
  * This is for creating custom submenu - for showing payment transaction details
  *
@@ -975,7 +977,7 @@ function paymentLinkCallback() {
 
 	if ( isset( $_GET['transaction_status'] ) ) {
 		if ( 'completed' == $_GET['transaction_status'] ) {
-			$completed_current_class = 'class="current" aria-current="page"';
+			$completed_current_class = WC_HP_AUROPAY_CURRENT_CLASS;
 
 			$total_result = $wpdb->get_results(
 				$wpdb->prepare(
@@ -996,7 +998,7 @@ function paymentLinkCallback() {
 				ARRAY_A
 			);
 		} elseif ( 'refunded' == $_GET['transaction_status'] ) {
-			$refunded_current_class = 'class="current" aria-current="page"';
+			$refunded_current_class = WC_HP_AUROPAY_CURRENT_CLASS;
 			$total_result = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT *
@@ -1016,7 +1018,7 @@ function paymentLinkCallback() {
 				ARRAY_A
 			);
 		} elseif ( 'failed' == $_GET['transaction_status'] ) {
-			$failed_current_class = 'class="current" aria-current="page"';
+			$failed_current_class = WC_HP_AUROPAY_CURRENT_CLASS;
 			$total_result = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT *
@@ -1036,7 +1038,7 @@ function paymentLinkCallback() {
 				ARRAY_A
 			);
 		} else {
-			$all_current_class = 'class="current" aria-current="page"';
+			$all_current_class = WC_HP_AUROPAY_CURRENT_CLASS;
 			$total_result = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT *
@@ -1057,7 +1059,7 @@ function paymentLinkCallback() {
 			);
 		}
 	} else {
-		$all_current_class = 'class="current" aria-current="page"';
+		$all_current_class = WC_HP_AUROPAY_CURRENT_CLASS;
 		$total_result = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT *

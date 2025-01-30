@@ -2,7 +2,7 @@
 Contributors: woocommerce
 Requires at least: 5.6
 Tested up to: 5.6
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -90,10 +90,13 @@ Yes, it does - production and Test (sandbox) mode is driven by the API keys you 
 = 1.3.1 =
 * switch from 1.3.0 to 1.3.1 Added the validation for firstname and lastname
 
+= 1.3.2 =
+* switch from 1.3.1 to 1.3.2 * Added the the logic if lastname is not present
+
 == Upgrade Notice ==
 
-= 1.3.1 =
-* switch from 1.3.0 to 1.3.1 Added the validation for firstname and lastname
+= 1.3.2 =
+* switch from 1.3.1 to 1.3.2 * Added the the logic if lastname is not present
 
 == License ==
 
