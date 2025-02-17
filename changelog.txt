@@ -1,7 +1,10 @@
 *** Changelog ***
 
+= 2025-02-14 - version 1.3.3
+* Added the functionality if the firstname and lastname of woocomerce users are not present then take it from the woccomerce checkout form if user login
+
 = 2025-01-30 - version 1.3.2
-* Added the the logic if lastname is not present
+* Added the logic if lastname is not present
 
 = 2024-12-13 - version 1.3.1
 * Added the validation for firstname and lastname

@@ -244,6 +244,21 @@ function auropayInitGatewayClass() {
 				$email = $customer->get_email();
 				$first_name = $customer->get_first_name();
 				$last_name = $customer->get_last_name();
+
+				if ( empty( $first_name ) || empty( $last_name ) ) {
+					$first_name = $order->get_billing_first_name();
+					$last_name = $order->get_billing_last_name();
+
+					// Check if the last name is empty
+					if ( empty( $last_name ) ) {
+						if ( strpos( $first_name, ' ' ) === false ) {
+							$last_name = $first_name;
+						} else {
+							list( $first_name, $last_name ) = explode( ' ', $first_name, 2 );
+						}
+					}
+				}
+
 				$phone = $order->get_billing_phone();
 
 				$customer_array = array(

@@ -2,7 +2,7 @@
 Contributors: woocommerce
 Requires at least: 5.6
 Tested up to: 5.6
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -93,10 +93,13 @@ Yes, it does - production and Test (sandbox) mode is driven by the API keys you 
 = 1.3.2 =
 * switch from 1.3.1 to 1.3.2 * Added the the logic if lastname is not present
 
+= 1.3.3 =
+* switch from 1.3.2 to 1.3.3 * Added the functionality if the firstname and lastname of woocomerce users are not present then take it from the woccomerce checkout form if user login
+
 == Upgrade Notice ==
 
-= 1.3.2 =
-* switch from 1.3.1 to 1.3.2 * Added the the logic if lastname is not present
+= 1.3.3 =
+* switch from 1.3.2 to 1.3.3 * Added the functionality if the firstname and lastname of woocomerce users are not present then take it from the woccomerce checkout form if user login
 
 == License ==
 
